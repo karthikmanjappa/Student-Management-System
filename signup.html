@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f0f1a, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Segoe UI", sans-serif;
+            overflow: hidden;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .signup-card {
+            width: 100%;
+            max-width: 420px;
+            background: #0f172a;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .signup-title {
+            text-align: center;
+            color: #38bdf8;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            color: #cbd5f5;
+        }
+
+        .form-control {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            color: #fff;
+            border-radius: 10px;
+        }
+
+        .form-control:focus {
+            background-color: #1e293b;
+            color: #fff;
+            border-color: #38bdf8;
+            box-shadow: 0 0 8px #38bdf8;
+        }
+
+        .btn-signup {
+            border-radius: 10px;
+            background: linear-gradient(90deg, #06b6d4, #3b82f6);
+            border: none;
+            font-weight: bold;
+            color: white;
+            transition: 0.3s;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+        }
+
+        .btn-signup:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.9);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 15px;
+            color: #cbd5f5;
+        }
+
+        .login-link a {
+            color: #38bdf8;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animated background circles */
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: move 10s infinite alternate;
+        }
+
+        .circle.one {
+            width: 200px;
+            height: 200px;
+            background: #38bdf8;
+            top: 10%;
+            left: 5%;
+        }
+
+        .circle.two {
+            width: 300px;
+            height: 300px;
+            background: #9333ea;
+            bottom: 10%;
+            right: 5%;
+        }
+
+        @keyframes move {
+            from { transform: translateY(0); }
+            to { transform: translateY(-40px); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="circle one"></div>
+<div class="circle two"></div>
+
+<div class="signup-card">
+    <div class="signup-title">Create Account</div>
+
+    <!-- Django messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger text-center">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Full Name</label>
+            <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" placeholder="Create password" required>
+        </div>
+
+        <button type="submit" class="btn btn-signup w-100 py-2">
+            Sign Up
+        </button>
+    </form>
+
+    <div class="login-link">
+        <p class="mt-3">Already have an account? <a href="/login/">Login</a></p>
+    </div>
+</div>
+
+</body>
+</html>

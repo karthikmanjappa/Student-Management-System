@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Profile</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #020617, #0f172a);
+    font-family: "Segoe UI", sans-serif;
+    color: white;
+}
+
+/* Navbar */
+.navbar {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(10px);
+}
+
+/* Main content */
+.main {
+    min-height: calc(100vh - 56px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Profile card */
+.profile-card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(15px);
+    border-radius: 22px;
+    padding: 40px;
+    width: 100%;
+    max-width: 520px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(56,189,248,0.2);
+    animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.profile-pic {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #38bdf8;
+    margin-bottom: 15px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    background: rgba(255,255,255,0.08);
+    padding: 12px 18px;
+    border-radius: 12px;
+    margin: 12px 0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top px-4">
+    <a class="navbar-brand text-info" href="#">My Profile</a>
+
+    <div class="ms-auto dropdown">
+        <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">
+            {{ request.user.first_name }}
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="{% url 'profile_dashboard' %}">Profile</a></li>
+            <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+    <div class="profile-card">
+
+        {% if profile.profile_pic %}
+            <img src="{{ profile.profile_pic.url }}" class="profile-pic">
+        {% else %}
+            <img src="https://via.placeholder.com/140" class="profile-pic">
+        {% endif %}
+
+        <h3 class="mt-2">{{ request.user.first_name }}</h3>
+
+        <div class="info-row">
+            <span>Email</span>
+            <b>{{ request.user.email }}</b>
+        </div>
+
+        <div class="info-row">
+            <span>Designation</span>
+            <b>{{ profile.designation }}</b>
+        </div>
+
+        <div class="info-row">
+            <span>Age</span>
+            <b>{{ profile.age }}</b>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

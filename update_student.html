@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Student</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Segoe UI", Arial, sans-serif;
+            transition: 0.3s;
+        }
+
+        /* ===== FORM CARD (DARK DEFAULT) ===== */
+        .form-card {
+            width: 460px;
+            background: #020617;
+            padding: 30px 35px;
+            border-radius: 20px;
+            color: #e5e7eb;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+            animation: fadeIn 0.6s ease-in-out;
+            transition: 0.3s;
+        }
+
+        /* ===== GLASS MODE ===== */
+        body.glass-mode {
+            background: linear-gradient(135deg, #0ea5e9, #22c55e);
+        }
+
+        body.glass-mode .form-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            color: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #38bdf8;
+        }
+
+        body.glass-mode h3 {
+            color: white;
+        }
+
+        label {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 9px 12px;
+            margin-top: 4px;
+            margin-bottom: 14px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            background: #ffffff;
+        }
+
+        input:focus, select:focus {
+            box-shadow: 0 0 0 2px rgba(56,189,248,0.6);
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 11px;
+            margin-top: 10px;
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(34,197,94,0.5);
+        }
+
+        .back-btn {
+            width: 100%;
+            padding: 10px;
+            margin-top: 12px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #64748b, #475569);
+            color: white;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(90deg, #475569, #334155);
+            color: white;
+        }
+
+        /* ===== FILE INPUT STYLE ===== */
+        .file-upload {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.9);
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        .file-label {
+            background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+            color: black;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .file-label:hover {
+            opacity: 0.9;
+        }
+
+        #file-name {
+            font-size: 14px;
+            color: #020617;
+        }
+
+        body.glass-mode #file-name {
+            color: #020617;
+        }
+
+        /* Toggle button */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #38bdf8;
+            color: black;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        body.glass-mode .theme-toggle {
+            background: #111827;
+            color: white;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()">🌙 Dark / 🧊 Glass</button>
+
+<div class="form-card">
+    <h3>Update Student</h3>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label>USN</label>
+        <input type="text" name="usn" value="{{ student.usn }}" required>
+
+        <label>Name</label>
+        <input type="text" name="name" value="{{ student.name }}" required>
+
+        <label>Course</label>
+        <select name="course">
+            <option {% if student.course == "Data Science" %}selected{% endif %}>Data Science</option>
+            <option {% if student.course == "Artificial Intelligence and Machine Learning" %}selected{% endif %}>Artificial Intelligence and Machine Learning</option>
+            <option {% if student.course == "Cyber Security" %}selected{% endif %}>Cyber Security</option>
+            <option {% if student.course == "AWS" %}selected{% endif %}>AWS</option>
+            <option {% if student.course == "SAP" %}selected{% endif %}>SAP</option>
+            <option {% if student.course == "Java Full Stack" %}selected{% endif %}>Java Full Stack</option>
+        </select>
+
+        <label>Section</label>
+        <select name="section">
+            <option {% if student.section == "A" %}selected{% endif %}>A</option>
+            <option {% if student.section == "B" %}selected{% endif %}>B</option>
+            <option {% if student.section == "C" %}selected{% endif %}>C</option>
+            <option {% if student.section == "D" %}selected{% endif %}>D</option>
+        </select>
+
+        <label>Attendance</label>
+        <select name="attendance">
+            <option {% if student.attendance == "A+" %}selected{% endif %}>A+</option>
+            <option {% if student.attendance == "B+" %}selected{% endif %}>B+</option>
+            <option {% if student.attendance == "B" %}selected{% endif %}>B</option>
+            <option {% if student.attendance == "C" %}selected{% endif %}>C</option>
+        </select>
+
+        <label>Contact</label>
+        <input type="text" name="contact" value="{{ student.contact }}" required>
+
+        <label>Email</label>
+        <input type="email" name="email" value="{{ student.email }}" required>
+
+        <label>Profile Photo</label>
+        <div class="file-upload">
+            <label for="photo" class="file-label">Choose File</label>
+            <span id="file-name">No file chosen</span>
+        </div>
+        <input type="file" name="photo" id="photo" hidden onchange="showFileName(this)">
+
+        <button type="submit">Update Student</button>
+    </form>
+
+    <a href="{% url 'student_list' %}" class="back-btn">⬅ Back to Student List</a>
+</div>
+
+<script>
+function toggleTheme() {
+    document.body.classList.toggle("glass-mode");
+}
+
+function showFileName(input) {
+    if (input.files.length > 0) {
+        document.getElementById("file-name").textContent = input.files[0].name;
+    } else {
+        document.getElementById("file-name").textContent = "No file chosen";
+    }
+}
+</script>
+
+</body>
+</html>

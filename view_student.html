@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            padding: 40px;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-card {
+            background: #111827;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+        }
+
+        .profile-card img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #38bdf8;
+        }
+
+        .profile-card h4 {
+            margin-top: 10px;
+            color: #38bdf8;
+        }
+
+        .details-card {
+            background: #111827;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+        }
+
+        .details-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #38bdf8;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #374151;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .back-btn {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2 class="page-title">Student Profile</h2>
+
+<div class="container">
+    <div class="row g-4 align-items-start">
+
+        <!-- LEFT: Profile Photo + Name -->
+        <div class="col-md-4">
+            <div class="profile-card">
+
+                {% if student.photo %}
+                    <img src="{{ student.photo.url }}">
+                {% else %}
+                    <img src="https://via.placeholder.com/140">
+                {% endif %}
+
+                <h4>{{ student.name }}</h4>
+            </div>
+        </div>
+
+        <!-- RIGHT: Full Details -->
+        <div class="col-md-8">
+            <div class="details-card">
+                <div class="details-title">Student Details</div>
+
+                <div class="detail-row">
+                    <span><b>USN</b></span>
+                    <span>{{ student.usn }}</span>
+                </div>
+
+                <div class="detail-row">
+                    <span><b>Course</b></span>
+                    <span>{{ student.course }}</span>
+                </div>
+
+                <div class="detail-row">
+                    <span><b>Section</b></span>
+                    <span>{{ student.section }}</span>
+                </div>
+
+                <div class="detail-row">
+                    <span><b>Attendance</b></span>
+                    <span>{{ student.attendance }}</span>
+                </div>
+
+                <div class="detail-row">
+                    <span><b>Contact</b></span>
+                    <span>{{ student.contact }}</span>
+                </div>
+
+                <div class="detail-row">
+                    <span><b>Email</b></span>
+                    <span>{{ student.email }}</span>
+                </div>
+            </div>
+
+            <a href="/students/" class="btn btn-outline-light back-btn">
+                Back to Student List
+            </a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
